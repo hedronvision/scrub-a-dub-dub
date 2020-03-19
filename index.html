@@ -350,10 +350,10 @@
 							});
 							
 							var data = new FormData();
-							data.append('entry.1670508223', emails[0]);
-							data.append('entry.1792109911', emails.slice(1).join(','));
-							data.append('entry.699033873', getUserLocales().join(','));
-							data.append('entry.58134249', jstz.determine().name());
+							data.append('entry.1467584158', emails[0]);
+							data.append('entry.185301114', emails.slice(1).join(','));
+							data.append('entry.5709285', getUserLocales().join(','));
+							data.append('entry.1085311096', jstz.determine().name());
 							
 							var sendButton = form.getElementsByTagName('button')[0];
 							sendButton.innerHTML = 'Sending...';
@@ -364,7 +364,7 @@
 									document.getElementById('post-signup').style.display = '';
 								}
 							};
-							xhr.open('POST', 'https://docs.google.com/forms/d/e/1FAIpQLSdRoNMuOURo7jkg7lInO47FM6DH8cCLlx8AVRuSdGvZ-kgJKA/formResponse', true);
+							xhr.open('POST', 'https://docs.google.com/forms/d/e/1FAIpQLSeOyfXu7GWcOWgkbP87gW6ugmOYnDpjmQ_wkvUFbJrzFqKN0g/formResponse', true);
 							xhr.send(data);
 							
 							a.logEvent("Sign Up: Signed Up", {'referrals': emails.length});
