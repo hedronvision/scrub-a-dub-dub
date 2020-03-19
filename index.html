@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Scrub A Dub Dub</title>
+<!--		TODO favicon-->
+		<script type="text/javascript">
+			(function(e, t) {
+				var n = {
+					_q: [],
+					_iq: {}
+				};
+				var r = t.createElement("script");
+				r.type = "text/javascript";
+				r.async = true;
+				r.src = "https://cdn.amplitude.com/libs/amplitude-4.5.2-min.gz.js";
+				r.integrity = "sha384-f1maK8oMrCMNEWGGg3Hx3dMTOQBbXr4e1ZIjB/J0TcgJx5UeE0g5S5PM5BbWPe4E";
+				r.crossOrigin = "anonymous";
+				r.onload = function() {
+					e.amplitude.runQueuedFunctions()
+				};
+
+				var i = t.getElementsByTagName("script")[0];
+				i.parentNode.insertBefore(r, i);
+				function s(e, t) {
+					e.prototype[t] = function() {
+						this._q.push([t].concat(Array.prototype.slice.call(arguments, 0)));
+						return this
+					}
+				}
+				var d = ["init", "logEvent"];
+				function v(e) {
+					function t(t) {
+						e[t] = function() {
+							e._q.push([t].concat(Array.prototype.slice.call(arguments, 0)))
+						}
+					}
+					for (var n = 0; n < d.length; n++) {
+						t(d[n])
+					}
+				}
+				v(n);
+				n.getInstance = function(e) {
+					e = (!e || e.length === 0 ? "$default_instance" : e).toLowerCase();
+					if (!n._iq.hasOwnProperty(e)) {
+						n._iq[e] = {
+							_q: []
+						};
+						v(n._iq[e])
+					}
+					return n._iq[e]
+				};
+				e.amplitude = n
+			})(window, document);
+
+			var a = amplitude.getInstance();
+
+			var k = "4f0408257a9b7836c2c374f3ebde0c6a";
+			if (location.hostname === "localhost" || location.hostname === "127.0.0.1" || location.hostname === "") {
+				k = "f7a4009672c9c0dd176a4d77cb4ffe27";
+			}
+			a.init(k, null, {includeReferrer: true});
+
+			a.logEvent("Sign Up: Page View");
+
+			var isIOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
+			var isAndroid = !!navigator.userAgent && /(android)/i.test(navigator.userAgent);
+			
+			function copyToClipboard(s) {
+				var el = document.createElement('textarea');
+				el.value = s;
+				document.body.appendChild(el);
+				el.select();
+				document.execCommand('copy');
+				document.body.removeChild(el);
+			}
+			
+			function makeClickCopyable(elem) {
+				elem.style.cursor = 'pointer';
+				elem.setAttribute('data-tippy', 'Click to copy!');
+				elem.setAttribute('data-tippy-arrow', 'true');
+				elem.setAttribute('data-tippy-followcursor', 'true');
+				elem.setAttribute('data-tippy-delay', '[200,0]');
+				elem.addEventListener('click', function(e) {
+					copyToClipboard(e.target.innerText);
+					a.logEvent('Sign Up: Click to Copy', {'id': elem.id});
+				});
+			}
+			
+			document.addEventListener('DOMContentLoaded', function() {
+				Array.prototype.forEach.call(document.getElementsByClassName('click-copyable'), makeClickCopyable);
+				if (!isIOS && !isAndroid) {
+					Array.prototype.forEach.call(document.getElementsByTagName('a'), function(a) {
+						if (a.href.startsWith('mailto:')) {
+							a.removeAttribute('href');
+							makeClickCopyable(a);
+						}
+					});
+				}
+			});
+
+			function submitFormNoRedirect(event, form) {
+				event.preventDefault();
+				
+				var sendButton = form.getElementsByTagName('button')[0];
+				var sendButtonInner = sendButton.innerHTML;
+				sendButton.innerHTML = 'Sending...';
+				var xhr = new XMLHttpRequest();
+				xhr.onreadystatechange = function () {
+					if (xhr.readyState === 4) {
+						sendButton.innerHTML = 'Sent!';
+						setTimeout(function() {
+							sendButton.innerHTML = sendButtonInner;
+						}, 5000);
+					}
+				};
+				xhr.open(form.method, form.action, true);
+				xhr.send(new FormData(form));
+				
+				a.logEvent('Chat Widget: Submitted');
+				
+				return false;
+			}
+		</script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.15.0/dist/umd/popper.min.js" integrity="sha384-L2pyEeut/H3mtgCBaUNw7KWzp5n9+4pDQiExs933/5QfaTh8YStYFFkOzSoXjlTb" crossorigin="anonymous" defer></script>
+		<script src="https://cdn.jsdelivr.net/npm/tippy.js@4.3.4/umd/index.all.min.js" integrity="sha384-jdlJ1MoU0LrYStK51EBb7UvXaZ2ukMt+8tmhzZfSUilURo7yUh+IjJt0nqFjHapI" crossorigin="anonymous" defer></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no" />
+		<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600&display=swap" rel="stylesheet">
+		<style>
+			body {font-family: 'Nunito', sans-serif; font-weight: 400; text-align: center}
+			p, footer, figcaption, input, button, textarea {font-family: 'Nunito', sans-serif; color: #8fd0ca; font-size: 18px; text-shadow: 0px 0px 1em #111111}
+			::selection {background-color:#E71D36;}
+			
+			/* Contact form */
+			input, textarea, button {border-radius: 6px; border-width: 2px; background-color: black; font-size: 12px; border-style: solid}
+			input, textarea { border-color: #011627; height: 2em; padding: 2px 0px 2px 8px}
+			button {font-weight: 300; color: #D0D0D0; border-color: #011627; height: 2.5em; padding: 2px 8px; cursor: pointer}
+			
+			/* Footer */
+			footer > a {text-decoration: none}
+			html, body {height: 100%; margin: 0px}
+			body {display: flex; flex-direction: column; justify-content: space-between}
+			main {flex: 1}
+		</style>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/material-components-web@5.1.0/dist/material-components-web.min.css" integrity="sha256-dxXllzbMG3Xtll4qN8/9+lmDzRdXGK2autQOtC5DKXk=" crossorigin="anonymous">
+		<script src="https://cdn.jsdelivr.net/npm/material-components-web@5.1.0/dist/material-components-web.min.js" integrity="sha256-LG4363zgCGXTi7UsAyrX1mp/GPfRxzbuS/+F2NmDaGY=" crossorigin="anonymous"></script>
+		<style>
+		:root {
+			--mdc-theme-primary: #ffe72e;
+			--mdc-theme-error: #E71D36;
+			--mdc-typography-font-family: 'Nunito';
+			--mdc-theme-on-primary: #011627;
+			--mdc-typography-button-font-weight: 600;
+		}
+		</style>
+	</head>
+	<body style="background-color: #011627; margin:0px">
+		<main>
+			<div style="margin: 0 auto 0 auto; padding: 16px; max-width: 400px">
+				<div>
+					<p style="margin-bottom: 0px">Want to help slow the spread of coronavirus?</p>
+					<p style="color: #FF9F1C; font-size:20px; margin-top:4px; margin-bottom: -8px">GET TIMELY REMINDERS TO</p>
+					<p style="color: #FF9F1C; font-size:40px; margin-top:0px; margin-bottom: -8px">WASH YOUR HANDS</p>
+					<p style="font-size: 15px; font-weight: 200; margin-top: 4px"><em>...and help your friends remember to wash theirs, too.</em></p>
+				</div>
+				
+				<div style="margin-top: 50px">
+					<p style="font-size:20px; margin-bottom: 0px">Regular handwashing is the CDC's #1 preventative recommendation.</p>
+					<p style="font-size: 15px; font-weight: 200">The UK Health Secretary agrees:<br>“Washing hands regularly is the single most important thing.”</p>
+				</div>
+				
+				<div style="margin-top: 40px">
+					<p style="color: #FF9F1C; margin-bottom: 0px; text-shadow: 0px 0px 1em #FF9F1C">We need to spread the habit of frequent handwashing faster than we spread coronavirus.</p>
+					<p style="color: #FF9F1C; font-size: 14px">Almost no one remembers to wash their hands enough.<br>Remembering would save lots of lives.</p>
+				</div>
+				
+				<form onsubmit="sendSignupForm(event, this)" style="margin-top: 40px">
+					<p style="color:#ffe730; margin-bottom: 0">Solution: Get handwashing reminders sent to yourself and those you care about.</p>
+					<p style="font-size: 12px; font-weight: 200; margin-top: 4px; margin-bottom: 30px">We'll prompt you daily before lunch and dinner.<br>(You can always switch it off, of course.)</p>
+					
+					<label class="mdc-text-field mdc-text-field--outlined mdc-text-field--focused">
+						<input oninput="maybeInsert(this)" onfocus="if(!this.hasFocused) { a.logEvent('Sign Up: Focused Form (First)') } this.hasFocused = true;" type="email" autocomplete="email" required class="mdc-text-field__input mdc-theme--primary" aria-labelledby="my-label-id">
+						<div class="mdc-notched-outline">
+						<div class="mdc-notched-outline__leading"></div>
+						<div class="mdc-notched-outline__notch">
+						<span class="mdc-floating-label mdc-theme--primary" id="my-label-id">Your Email</span>
+						</div>
+						<div class="mdc-notched-outline__trailing"></div>
+						</div>
+					</label>
+
+					<div style="height: 7px" class="form-insertion-point"></div>
+					<button class="mdc-button mdc-button--raised">
+					  <div class="mdc-button__ripple"></div>
+					  <span class="mdc-button__label">Let's Do it!</span>
+					</button>
+					
+					<!-- IE support for timezone. -->
+					<script src="https://cdn.jsdelivr.net/npm/jstimezonedetect@1.0.7/dist/jstz.min.js" integrity="sha256-bt5sKtbHgPbh+pz59UcZPl0t3VrNmD8NUbPu8lF4Ilc=" crossorigin="anonymous" async></script>
+					<script type="text/javascript">
+						// Attach material JS
+						Array.prototype.forEach.call(document.querySelectorAll('.mdc-text-field'), function(v) { 
+							new mdc.textField.MDCTextField(v);
+						});
+						mdc.ripple.MDCRipple.attachTo(document.querySelector('.mdc-button'));
+						
+						// Polyfill closest
+						if (!Element.prototype.matches) {
+						  Element.prototype.matches = Element.prototype.msMatchesSelector || Element.prototype.webkitMatchesSelector;
+						}
+						if (!Element.prototype.closest) {
+						  Element.prototype.closest = function(s) {
+							var el = this;
+
+							do {
+							  if (el.matches(s)) return el;
+							  el = el.parentElement || el.parentNode;
+							} while (el !== null && el.nodeType === 1);
+							return null;
+						  };
+						}
+						
+						function isLast(input) {
+							var allInputs = input.closest('form').getElementsByTagName('input');
+							return allInputs[allInputs.length-1] === input;
+						}
+						
+						
+						function cleanup(label) {
+							var input = label.getElementsByTagName('input')[0];
+							if (input.value.length === 0 && !isLast(input)) {
+								label.parentElement.removeChild(label);
+							}
+						}
+						
+						var FRIEND_BOX_HTML = 
+							'<div style="margin-top: 3px"> \n' +
+							'<label onfocusout="cleanup(this)" class="mdc-text-field mdc-text-field--outlined"> \n' +
+							'	<input oninput="maybeInsert(this)" onkeydown="removeOnEmptyDelete(event, this)" type="email" autocomplete="email" class="mdc-text-field__input mdc-theme--primary" aria-labelledby="my-label-id"> \n' +
+							'	<div class="mdc-notched-outline"> \n' +
+							'	<div class="mdc-notched-outline__leading"></div> \n' +
+							'	<div class="mdc-notched-outline__notch"> \n' +
+							'	<span class="mdc-floating-label mdc-theme--primary" id="my-label-id"><span style="font-size: 24px; padding-right:4px">+</span> save a friend</span> \n' +
+							'	</div> \n' +
+							'	<div class="mdc-notched-outline__trailing"></div> \n' +
+							'	</div> \n' +
+							'</label> \n' +
+							'</div> \n';
+						function maybeInsert(input) {
+							if (input.value.length && input.checkValidity() && isLast(input)) {
+								input.closest('form').getElementsByClassName('form-insertion-point')[0].insertAdjacentHTML('beforebegin', FRIEND_BOX_HTML);
+								var allTextFields = input.closest('form').querySelectorAll('.mdc-text-field');
+								var justInserted = allTextFields[allTextFields.length-1];
+								new mdc.textField.MDCTextField(justInserted);
+							}
+						}
+						
+						function removeOnEmptyDelete(event, input) {
+							if (!input.value.length) {
+								var key = event.keyCode || event.charCode;
+								if ((key == 8 || key == 46) && !isLast(input)) {
+									var form = event.target.form;
+									var index = Array.prototype.indexOf.call(form, event.target);
+									var label = input.closest('label');
+									label.parentElement.removeChild(label);
+									form.elements[index - 1].focus();
+									event.preventDefault();
+								}
+							}
+						}
+						
+						// Allow using enter to move through forms
+						document.addEventListener('keydown', function (event) {
+							if (event.keyCode === 13 && event.target.nodeName === 'INPUT') {
+								var form = event.target.form;
+								var index = Array.prototype.indexOf.call(form, event.target);
+								form.elements[index + 1].focus();
+								event.preventDefault();
+							}
+						});
+						
+						// Workaround browser locale differences
+						// Modified from get-user-locale
+						function getUserLocales() {
+							function filterDuplicates(arr) {
+								return arr.filter(function(el, index, self) {
+									return self.indexOf(el) === index;
+								});
+							}
+							
+							function fixLowercaseProperties(arr) {
+								return arr.map(function(el) {
+									if (
+										!el ||
+										el.indexOf('-') === -1 ||
+										el.toLowerCase() !== el
+									) {
+										return el;
+									}
+
+									const splitEl = el.split('-');
+									return splitEl[0]+'-'+splitEl[1].toUpperCase();
+								});
+							}
+
+							let languageList = [];
+
+							if (typeof window !== 'undefined') {
+								if (window.navigator.languages) {
+									languageList = languageList.concat(window.navigator.languages);
+								}
+								if (window.navigator.language) {
+									languageList.push(window.navigator.language);
+								}
+								if (window.navigator.userLanguage) {
+									languageList.push(window.navigator.userLanguage);
+								}
+								if (window.navigator.browserLanguage) {
+									languageList.push(window.navigator.browserLanguage);
+								}
+								if (window.navigator.systemLanguage) {
+									languageList.push(window.navigator.systemLanguage);
+								}
+							}
+
+							languageList.push('en-US'); // Fallback
+
+							return fixLowercaseProperties(filterDuplicates(languageList));
+						}
+												
+						function sendSignupForm(event, form) {
+							event.preventDefault();
+							
+							var emails = [];
+							Array.prototype.forEach.call(form.getElementsByTagName('input'), function(input) {
+								if (input.value.length) {
+									emails.push(input.value);
+								}
+							});
+							
+							var data = new FormData();
+							data.append('entry.1670508223', emails[0]);
+							data.append('entry.1792109911', emails.slice(1).join(','));
+							data.append('entry.699033873', getUserLocales().join(','));
+							data.append('entry.58134249', jstz.determine().name());
+							
+							var sendButton = form.getElementsByTagName('button')[0];
+							sendButton.innerHTML = 'Sending...';
+							var xhr = new XMLHttpRequest();
+							xhr.onreadystatechange = function () {
+								if (xhr.readyState === 4) {
+									form.parentElement.removeChild(form);
+									document.getElementById('post-signup').style.display = '';
+								}
+							};
+							xhr.open('POST', 'https://docs.google.com/forms/d/e/1FAIpQLSdRoNMuOURo7jkg7lInO47FM6DH8cCLlx8AVRuSdGvZ-kgJKA/formResponse', true);
+							xhr.send(data);
+							
+							a.logEvent("Sign Up: Signed Up", {'referrals': emails.length});
+						}
+					</script>
+				</form>
+				<div style="margin-top: 40px; background-color: #012440; padding:10px; border-radius: 10px; display: none" id="post-signup">
+					<p style="color: #c9b200; margin-bottom: 0px">Thanks for signing up!<br>Now, we need your help spreading the word.</p>
+					<p style="color: #FF9F1C; margin-bottom: 0px; margin-top: 2em">We need to spread the habit of frequent handwashing faster than coronavirus.</p>
+					<p style="color: #fce84e; font-size: 14px; margin-top: 0.5em">Please share this page, <span style="text-decoration: underline" class="click-copyable" id="share-URL">scrub-a-dub-dub.org</span>, on Facebook, email, WhatsApp, or wherever is best to you.</p>
+					<p style="font-size: 14px; margin-top: 2.5em; margin-bottom: 0px">Sample post, if it's helpful:</p>
+					<p style="color: #77b7b1; font-size: 12px; font-weight: 200; margin-top: 0.5em" class="click-copyable" id="share-suggest">Hey all, want to help slow the spread of coronavirus and save lives?<br>Social distancing is important, but the CDC's (and UK's) #1 preventative recommendation is to step up our handwashing. Almost no one remembers to wash their hands enough, and remembering would save lots of lives. I just signed up for handwashing reminders at <span style="white-space: nowrap">https://scrub-a-dub-dub.org</span>, and you should do the same!</p>
+				</div>
+			</div>
+		</main>
+		<footer>
+			<p style="margin-top: 24px; font-size: 14px">
+				<a href="mailto:contact@scrub-a-dub-dub.org?subject=Hello,%20Scrub%20A%20Dub%20Dub" target="_blank" id="contact-email">contact@scrub-a-dub-dub.org</a>
+			</p>
+		</footer>
+		<div style="position: fixed; bottom: 0; right: 10px; background-color: #002a4b; border-top-left-radius: 6px; border-top-right-radius: 6px; filter: drop-shadow(0px 0px 8px #111111); text-align: center" onmouseenter="this.open=true; this.getElementsByTagName('form')[0].style.display = 'inline'; a.logEvent('Chat Widget: Opened');" onmouseleave="this.open=false; this.getElementsByTagName('form')[0].style.display = 'none';" onclick="if(this.open) this.onmouseleave(); else this.onmouseenter();">
+			<img src="/message.svg" style="width: 24px; margin: 6px 6px 1px 6px;">
+			<form onsubmit="submitFormNoRedirect(event, this)" action="https://docs.google.com/forms/d/e/1FAIpQLSfFdm0xR0J2jkYRVo8CnmT0_y_-v_7yupb8zNtjd3BL6yW28g/formResponse" method="post" style="display: none" onclick="event.stopPropagation()">
+				<textarea name="entry.1792109911" placeholder="How can we help?" required style="resize: none; width: 92%; height: 80px"></textarea><br/>
+				<input type="email" name="entry.1670508223" autocomplete="email" placeholder="Email (optional)">
+				<button type="submit">Send</button>
+			</form>
+		</div>
+	</body>
+</html>
