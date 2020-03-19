@@ -131,6 +131,17 @@
 			p, footer, figcaption, input, button, textarea, a {font-family: 'Nunito', sans-serif; color: #8fd0ca; font-size: 18px; text-shadow: 0px 0px 1em #111111}
 			::selection {background-color:#E71D36;}
 			
+			/* Prevent autofill from looking terrible on dark backgrounds by hiding the highlight */
+			input:-webkit-autofill,
+			input:-webkit-autofill:hover, 
+			input:-webkit-autofill:focus, 
+			input:-webkit-autofill:active  {
+				-webkit-box-shadow: 0 0 0 30px #011627 inset;
+			}
+			input:-webkit-autofill {
+				-webkit-text-fill-color: #ffe72e;
+			}
+			
 			/* Contact form */
 			input, textarea, button {border-radius: 6px; border-width: 2px; background-color: black; font-size: 12px; border-style: solid}
 			input, textarea { border-color: #011627; height: 2em; padding: 2px 0px 2px 8px}
