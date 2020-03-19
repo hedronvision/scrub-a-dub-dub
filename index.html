@@ -128,7 +128,7 @@
 		<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;600&display=swap" rel="stylesheet">
 		<style>
 			body {font-family: 'Nunito', sans-serif; font-weight: 400; text-align: center}
-			p, footer, figcaption, input, button, textarea {font-family: 'Nunito', sans-serif; color: #8fd0ca; font-size: 18px; text-shadow: 0px 0px 1em #111111}
+			p, footer, figcaption, input, button, textarea, a {font-family: 'Nunito', sans-serif; color: #8fd0ca; font-size: 18px; text-shadow: 0px 0px 1em #111111}
 			::selection {background-color:#E71D36;}
 			
 			/* Contact form */
@@ -137,7 +137,7 @@
 			button {font-weight: 300; color: #D0D0D0; border-color: #011627; height: 2.5em; padding: 2px 8px; cursor: pointer}
 			
 			/* Footer */
-			footer > a {text-decoration: none}
+			footer a {text-decoration: none}
 			html, body {height: 100%; margin: 0px}
 			body {display: flex; flex-direction: column; justify-content: space-between}
 			main {flex: 1}
@@ -370,8 +370,8 @@
 			</div>
 		</main>
 		<footer>
-			<p style="margin-top: 24px; font-size: 14px">
-				<a href="mailto:contact@scrub-a-dub-dub.org?subject=Hello,%20Scrub%20A%20Dub%20Dub" target="_blank" id="contact-email">contact@scrub-a-dub-dub.org</a>
+			<p style="margin-top: 24px">
+				<a href="mailto:contact@scrub-a-dub-dub.org?subject=Hello,%20Scrub%20A%20Dub%20Dub" target="_blank" id="contact-email" style="font-size: 14px">contact@scrub-a-dub-dub.org</a>
 			</p>
 		</footer>
 		<div style="position: fixed; bottom: 0; right: 10px; background-color: #002a4b; border-top-left-radius: 6px; border-top-right-radius: 6px; filter: drop-shadow(0px 0px 8px #111111); text-align: center" onmouseenter="this.open=true; this.getElementsByTagName('form')[0].style.display = 'inline'; a.logEvent('Chat Widget: Opened');" onmouseleave="this.open=false; this.getElementsByTagName('form')[0].style.display = 'none';" onclick="if(this.open) this.onmouseleave(); else this.onmouseenter();">
