@@ -88,19 +88,26 @@
 			}
 			
 			function makeClickCopyable(elem) {
-				elem.style.cursor = 'pointer';
-				elem.setAttribute('data-tippy', isMobile ? 'Copied!' : 'Click to copy!');
-				if (isMobile) {
-					elem.setAttribute('data-tippy-trigger', 'click');
+				if (isMobile && navigator.share) {
+					elem.addEventListener('click', function(e) {
+						navigator.share({title: 'Scrub a Dub Dub', text: e.target.innerText});
+						amplitude.getInstance().logEvent('Sign Up: Click to Copy', {'id': elem.id, 'ui': 'system-share-sheet'});
+					});
 				} else {
-					elem.setAttribute('data-tippy-arrow', 'true');
-					elem.setAttribute('data-tippy-followcursor', 'true');
+					elem.setAttribute('data-tippy', isMobile ? 'Copied!' : 'Click to copy!');
+					if (isMobile) {
+						elem.setAttribute('data-tippy-trigger', 'click');
+					} else {
+						elem.style.cursor = 'pointer';
+						elem.setAttribute('data-tippy-arrow', 'true');
+						elem.setAttribute('data-tippy-followcursor', 'true');
+					}
+					elem.setAttribute('data-tippy-delay', isMobile ? '[0,1000]' : '[200,0]');
+					elem.addEventListener('click', function(e) {
+						copyToClipboard(e.target.innerText);
+						amplitude.getInstance().logEvent('Sign Up: Click to Copy', {'id': elem.id});
+					});
 				}
-				elem.setAttribute('data-tippy-delay', isMobile ? '[0,1000]' : '[200,0]');
-				elem.addEventListener('click', function(e) {
-					copyToClipboard(e.target.innerText);
-					amplitude.getInstance().logEvent('Sign Up: Click to Copy', {'id': elem.id});
-				});
 			}
 			
 			document.addEventListener('DOMContentLoaded', function() {
