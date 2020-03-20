@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="260px" height="260px" viewBox="0 0 260 260" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>Icon</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M31.3567839,172.981997 L71.7735706,193.872454 C75.7488787,195.927194 80.4339819,196.099752 84.549671,194.343012 L227.98995,133.116995 L227.98995,133.116995" id="path-1"></path>
+    </defs>
+    <g id="Icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#011627" x="0" y="0" width="260" height="260"></rect>
+        <path d="M85.295373,242.925306 L235.464035,176.295001 C241.246956,173.729101 244.974874,167.996607 244.974874,161.669995 L244.974874,133.541305 C244.974874,126.869491 240.834895,120.898006 234.58696,118.557831 L183.156337,99.294402 C179.416565,97.8936641 175.288158,97.9420868 171.58227,99.430156 L28.3294765,156.952147 C22.2653683,159.38714 18.2914573,165.265144 18.2914573,171.799867 L18.2914573,204.17757 C18.2914573,210.048397 21.5066868,215.447719 26.6683442,218.244843 L71.1830991,242.367573 C75.5461557,244.731931 80.7593318,244.937962 85.295373,242.925306 Z" id="Path" stroke="#FFE730" stroke-width="4" fill="#FF9F1C" stroke-linejoin="round"></path>
+        <g id="Path-2" stroke-linecap="round" stroke-linejoin="round">
+            <use stroke="#979797" stroke-width="1" xlink:href="#path-1"></use>
+            <use stroke="#FFE730" stroke-width="10" xlink:href="#path-1"></use>
+        </g>
+        <ellipse id="Oval" stroke="#B0D5D1" stroke-width="9" fill="#8FD0CA" cx="68.919598" cy="90.5843314" rx="28.4899497" ry="28.1633166"></ellipse>
+        <ellipse id="Oval" stroke="#B0D5D1" stroke-width="8" fill="#8FD0CA" cx="152.537688" cy="40.2828238" rx="23.1105528" ry="23.4371859"></ellipse>
+        <ellipse id="Oval" stroke="#B0D5D1" stroke-width="8" fill="#8FD0CA" cx="145.351759" cy="115.408452" rx="16.5778894" ry="16.2512563"></ellipse>
+    </g>
+</svg>
