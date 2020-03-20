@@ -88,7 +88,7 @@
 				elem.setAttribute('data-tippy-delay', isMobile ? '[0,1000]' : '[200,0]');
 				elem.addEventListener('click', function(e) {
 					copyToClipboard(e.target.innerText);
-					a.logEvent('Sign Up: Click to Copy', {'id': elem.id});
+					amplitude.getInstance().logEvent('Sign Up: Click to Copy', {'id': elem.id});
 				});
 			}
 			
@@ -122,7 +122,7 @@
 				xhr.open(form.method, form.action, true);
 				xhr.send(new FormData(form));
 				
-				a.logEvent('Chat Widget: Submitted');
+				amplitude.getInstance().logEvent('Chat Widget: Submitted');
 				
 				return false;
 			}
@@ -195,7 +195,7 @@
 					<p style="font-size: 12px; font-weight: 200; margin-top: 4px; margin-bottom: 30px">We'll prompt you daily before lunch and dinner.<br>(You can always switch it off, of course.)</p>
 					
 					<label class="mdc-text-field mdc-text-field--outlined mdc-text-field--focused">
-						<input oninput="maybeInsert(this)" onfocus="if(!this.hasFocused) { a.logEvent('Sign Up: Focused Form (First)') } this.hasFocused = true;" type="email" autocomplete="email" required class="mdc-text-field__input mdc-theme--primary" aria-labelledby="my-label-id">
+						<input oninput="maybeInsert(this)" onfocus="if(!this.hasFocused) { amplitude.getInstance().logEvent('Sign Up: Focused Form (First)') } this.hasFocused = true;" type="email" autocomplete="email" required class="mdc-text-field__input mdc-theme--primary" aria-labelledby="my-label-id">
 						<div class="mdc-notched-outline">
 						<div class="mdc-notched-outline__leading"></div>
 						<div class="mdc-notched-outline__notch">
@@ -372,7 +372,7 @@
 							xhr.open('POST', 'https://docs.google.com/forms/d/e/1FAIpQLSeOyfXu7GWcOWgkbP87gW6ugmOYnDpjmQ_wkvUFbJrzFqKN0g/formResponse', true);
 							xhr.send(data);
 							
-							a.logEvent("Sign Up: Signed Up", {'referrals': emails.length});
+							amplitude.getInstance().logEvent("Sign Up: Signed Up", {'referrals': emails.length});
 						}
 					</script>
 				</form>
@@ -390,7 +390,7 @@
 				<a href="mailto:contact@scrub-a-dub-dub.org?subject=Hello,%20Scrub%20A%20Dub%20Dub" target="_blank" id="contact-email" style="font-size: 14px">contact@scrub-a-dub-dub.org</a>
 			</p>
 		</footer>
-		<div style="position: fixed; bottom: 0; right: 10px; background-color: #002a4b; border-top-left-radius: 6px; border-top-right-radius: 6px; filter: drop-shadow(0px 0px 8px #111111); text-align: center" onmouseenter="this.open=true; this.getElementsByTagName('form')[0].style.display = 'inline'; a.logEvent('Chat Widget: Opened');" onmouseleave="this.open=false; this.getElementsByTagName('form')[0].style.display = 'none';" onclick="if(this.open) this.onmouseleave(); else this.onmouseenter();">
+		<div style="position: fixed; bottom: 0; right: 10px; background-color: #002a4b; border-top-left-radius: 6px; border-top-right-radius: 6px; filter: drop-shadow(0px 0px 8px #111111); text-align: center" onmouseenter="this.open=true; this.getElementsByTagName('form')[0].style.display = 'inline'; amplitude.getInstance().logEvent('Chat Widget: Opened');" onmouseleave="this.open=false; this.getElementsByTagName('form')[0].style.display = 'none';" onclick="if(this.open) this.onmouseleave(); else this.onmouseenter();">
 			<img src="/message.svg" style="width: 24px; margin: 6px 6px 1px 6px;">
 			<form onsubmit="submitFormNoRedirect(event, this)" action="https://docs.google.com/forms/d/e/1FAIpQLSfFdm0xR0J2jkYRVo8CnmT0_y_-v_7yupb8zNtjd3BL6yW28g/formResponse" method="post" style="display: none" onclick="event.stopPropagation()">
 				<textarea name="entry.1792109911" placeholder="How can we help?" required style="resize: none; width: 92%; height: 80px"></textarea><br/>
