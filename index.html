@@ -65,6 +65,7 @@
 
 			var isIOS = !!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform);
 			var isAndroid = !!navigator.userAgent && /(android)/i.test(navigator.userAgent);
+			var isMobile = isAndroid || isIOS;
 			
 			function copyToClipboard(s) {
 				var el = document.createElement('textarea');
@@ -77,10 +78,14 @@
 			
 			function makeClickCopyable(elem) {
 				elem.style.cursor = 'pointer';
-				elem.setAttribute('data-tippy', 'Click to copy!');
-				elem.setAttribute('data-tippy-arrow', 'true');
-				elem.setAttribute('data-tippy-followcursor', 'true');
-				elem.setAttribute('data-tippy-delay', '[200,0]');
+				elem.setAttribute('data-tippy', isMobile ? 'Copied!' : 'Click to copy!');
+				if (isMobile) {
+					elem.setAttribute('data-tippy-trigger', 'click');
+				} else {
+					elem.setAttribute('data-tippy-arrow', 'true');
+					elem.setAttribute('data-tippy-followcursor', 'true');
+				}
+				elem.setAttribute('data-tippy-delay', isMobile ? '[0,1000]' : '[200,0]');
 				elem.addEventListener('click', function(e) {
 					copyToClipboard(e.target.innerText);
 					a.logEvent('Sign Up: Click to Copy', {'id': elem.id});
@@ -89,7 +94,7 @@
 			
 			document.addEventListener('DOMContentLoaded', function() {
 				Array.prototype.forEach.call(document.getElementsByClassName('click-copyable'), makeClickCopyable);
-				if (!isIOS && !isAndroid) {
+				if (!isMobile) {
 					Array.prototype.forEach.call(document.getElementsByTagName('a'), function(a) {
 						if (a.href.startsWith('mailto:')) {
 							a.removeAttribute('href');
