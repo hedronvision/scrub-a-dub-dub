@@ -90,6 +90,7 @@
 			function makeClickCopyable(elem) {
 				if (isMobile && navigator.share) {
 					elem.addEventListener('click', function(e) {
+						copyToClipboard(e.target.innerText);
 						navigator.share({title: 'Scrub a Dub Dub', text: e.target.innerText});
 						amplitude.getInstance().logEvent('Sign Up: Click to Copy', {'id': elem.id, 'ui': 'system-share-sheet'});
 					});
