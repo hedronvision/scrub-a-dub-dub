@@ -283,7 +283,7 @@
 						var FRIEND_BOX_HTML = 
 							'<div style="margin-top: 3px"> \n' +
 							'<label onfocusout="cleanup(this)" class="mdc-text-field mdc-text-field--outlined"> \n' +
-							'	<input oninput="maybeInsert(this)" onkeydown="removeOnEmptyDelete(event, this)" type="email" readonly onfocus="if(this.hasAttribute(\'readonly\')) {this.removeAttribute(\'readonly\'); this.blur(); this.focus();}" class="mdc-text-field__input mdc-theme--primary" aria-labelledby="my-label-id"> \n' +
+							'	<input oninput="maybeInsert(this)" onkeydown="removeOnEmptyDelete(event, this)" type="email"   onfocus="this.removeAttribute(\'readonly\')" class="mdc-text-field__input mdc-theme--primary" aria-labelledby="my-label-id"> \n' +
 							'	<div class="mdc-notched-outline"> \n' +
 							'	<div class="mdc-notched-outline__leading"></div> \n' +
 							'	<div class="mdc-notched-outline__notch"> \n' +
@@ -298,6 +298,9 @@
 								input.closest('form').getElementsByClassName('form-insertion-point')[0].insertAdjacentHTML('beforebegin', FRIEND_BOX_HTML);
 								var allTextFields = input.closest('form').querySelectorAll('.mdc-text-field');
 								var justInserted = allTextFields[allTextFields.length-1];
+								if (/Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)) {
+									justInserted.getElementsByTagName('input')[0].setAttribute('readonly', true); // Temporary readonly to workaround chrome's autocomplete
+								}
 								new mdc.textField.MDCTextField(justInserted);
 							}
 						}
